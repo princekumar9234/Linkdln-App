@@ -242,3 +242,53 @@ export const sendConnectionRequest = async (req, res) => {
     return res.status(500).json({ message: " error.message " });
   }
 };
+
+export const getMyConnectionsRequests = async (req, res) => {
+  const { token } = req.body;
+  try {
+    const user = await User.findOne({ token });
+    if (!user) {
+      return res.status(404).json({ message: "user not found!" });
+    }
+
+    const connections = await ConnectionRequest.find({
+      userId: user_.id,
+    }).populate("userId", "name email username profilePicture");
+
+    return res.json({ connections });
+  } catch (error) {
+    return res.status(500).json({ message: " error.message " });
+  }
+};
+
+export const whatAreMyConnections = async (req, res) => {
+  const { token } = req.body;
+  try {
+    const user = await User.findOne({ token });
+    if (!user) {
+      return res.status(404).json({ message: "user not found!" });
+    }
+    const connections = await ConnectionRequest.find({
+      connectionId: user._id,
+    }).populate("userId", "name email username profilePicture");
+
+    return res.json(connections);
+  } catch (error) {
+    return res.status(500).json({ message: " error.message " });
+  }
+};
+
+export const acceptConnectionRequest = async (req,res) =>{
+
+   const {token,requestId,action_type} =req.body;
+   try {
+     const user = await User.findOne({token});
+     if(!user) {
+      return res.status(404).json({message : "user not found!"});
+       
+     }
+   } catch(error) {
+    return res.status(500).json({ message: " error.message " });
+
+   }
+}
