@@ -278,17 +278,22 @@ export const whatAreMyConnections = async (req, res) => {
   }
 };
 
-export const acceptConnectionRequest = async (req,res) =>{
+export const acceptConnectionRequest = async (req, res) => {
+  const { token, requestId, action_type } = req.body;
+  try {
+    const user = await User.findOne({ token });
+    if (!user) {
+      return res.status(404).json({ message: "user not found!" });
+    }
+    if (action_type === "accept") {
+      connection.status_accepted = true;
+    } else {
+      connection.status_accepted = false;
+    }
 
-   const {token,requestId,action_type} =req.body;
-   try {
-     const user = await User.findOne({token});
-     if(!user) {
-      return res.status(404).json({message : "user not found!"});
-       
-     }
-   } catch(error) {
+    await connection.save();
+    return res.json({ message: "request updated" });
+  } catch (error) {
     return res.status(500).json({ message: " error.message " });
-
-   }
-}
+  }
+};
