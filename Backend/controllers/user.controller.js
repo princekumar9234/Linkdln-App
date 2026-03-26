@@ -32,13 +32,6 @@ const convertUserDataTOPDF = async (userData) => {
     doc.fontSize(14).text(`year: ${work.year}`);
   });
 
-  doc.fontSize(14).text("education : ");
-  userData.pastWork.forEach((edu, index) => {
-    doc.fontSize(14).text(`School Name :${edu.school}`);
-    doc.fontSize(14).text(`Degree: ${edu.degree}`);
-    doc.fontSize(14).text(`fieldOfStudy: ${edu.fieldOfStudy}`);
-  });
-
   doc.end();
 
   return outputPath;
