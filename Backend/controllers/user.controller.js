@@ -69,6 +69,7 @@ export const register = async (req, res) => {
   }
 };
 
+
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -89,11 +90,12 @@ export const login = async (req, res) => {
 
     await User.updateOne({ _id: user.id }, { token });
 
-    return res.json({ token });
+    return res.json({ token:token});
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
 };
+
 
 //  update for user profile picture
 export const uploadProfilePicture = async (req, res) => {
