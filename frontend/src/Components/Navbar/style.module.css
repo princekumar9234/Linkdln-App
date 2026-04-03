@@ -1,18 +1,17 @@
-.container{
-    padding: 1.2rem;
+.container {
+  padding: 1rem;
 }
 .navBar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .navBarOptionContainer {
-    display: flex;
+  display: flex;
 }
-.buttonjoin{
-     font-size: 1.4rem;
+.buttonjoin {
+  font-size: 1.4rem;
   color: #4d4d4d;
   user-select: none;
   transition: all 0.2s;
@@ -23,5 +22,5 @@
   padding-block: 0.6rem;
   color: white;
   border-radius: 20px;
-  cursor:"pointer";
+  cursor:pointer;
 }
