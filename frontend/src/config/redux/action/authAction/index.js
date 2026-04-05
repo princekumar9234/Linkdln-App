@@ -33,26 +33,16 @@ export const registerUser = createAsyncThunk(
     "user/register",
     async (user, thunkAPI) =>{
         try {
-           const response =await clientServer.post(`/register`, {
+           const request  =await clientServer.post("/register", {
+            username:user.username,
              email:user.email,
-            password: user.password
+            password: user.password,
+            name:user.name,
            });
 
-           if(response.data.token) {
-
-            localStorage.setItem("token", response.data.token);
-
-           }
-            else {
-            return thunkAPI.rejectWithValue ({
-                message: "token not found!"
-            })
-           }
-
-            return thunkAPI.rejectWithValue(response.data.token);
 
         } catch(error) {
-            return thunkAPI.rejectWithValue(error.response.data);
+            return thunkAPI.rejectWithValue(error.request.data);
         }
     }
 )

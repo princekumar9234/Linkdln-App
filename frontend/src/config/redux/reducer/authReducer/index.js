@@ -51,10 +51,10 @@ const authSlice = createSlice({
         state.isLoggedIn = true;
         state.message = "register is successful";
       })
-      .addCase(registerUser.rejected, (state) => {
+      .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
-        state.message = action.payload;
+         state.message = action.payload;
       });
   },
 });
