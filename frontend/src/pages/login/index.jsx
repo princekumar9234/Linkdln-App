@@ -8,13 +8,13 @@ import { registerUser } from "@/config/redux/action/authAction";
 function LoginComponent() {
   const authState = useSelector((state) => state.auth);
   const router = useRouter();
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
 
   const [userLoginMethod, setUserLoginMethod] = useState(false);
 
   const [email, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
-  const [usernanme, setUsername] = useState("");
+  const [username, setUsername] = useState("");
   const [name, setName] = useState("");
 
   useEffect(() => {
@@ -24,7 +24,7 @@ function LoginComponent() {
   });
   const handleRegister = () => {
     console.log("registering...");
-    dispath(registerUser(usernanme, name, email, password));
+    dispatch(registerUser({ username, name, email, password }))
   };
   
   return (
@@ -35,6 +35,7 @@ function LoginComponent() {
             <p className={styles.cardleft_header}>
               {userLoginMethod ? "sign in" : "sign up"}{" "}
             </p>
+            <p style={{color:authState.isError ? "red" :"green"}}> {authState.message?.message || authState.message}</p> 
             <div className={styles.inputContainers}>
               <div className={styles.inputRows}>
                 <input

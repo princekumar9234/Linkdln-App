@@ -40,8 +40,8 @@ const authSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
       })
-      .addCase(registerUser.pending, (state) => {
-        isLoading = true;
+      .addCase(registerUser.pending, (state, action) => {
+        state.isLoading = true;
         state.message = "register you...";
       })
       .addCase(registerUser.fulfilled, (state, action) => {
