@@ -18,15 +18,16 @@ function LoginComponent() {
   const [name, setName] = useState("");
 
   useEffect(() => {
-    if (authState.loggedIn) {
+    if (authState.LoggedIn) {
       router.push("/dashboard");
     }
-  });
+  },[authState.LoggedIn]);
+
   const handleRegister = () => {
     console.log("registering...");
-    dispatch(registerUser({ username, name, email, password }))
+    dispatch(registerUser({ username, name, email, password }));
   };
-  
+
   return (
     <UserLayout>
       <div className={styles.Container}>
@@ -35,11 +36,13 @@ function LoginComponent() {
             <p className={styles.cardleft_header}>
               {userLoginMethod ? "sign in" : "sign up"}{" "}
             </p>
-            <p style={{color:authState.isError ? "red" :"green"}}> {authState.message?.message || authState.message}</p> 
+            <p style={{ color: authState.isError ? "red" : "green" }}>
+              {authState.message?.message || authState.message}
+            </p>
             <div className={styles.inputContainers}>
               <div className={styles.inputRows}>
                 <input
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => setName(e.target.value)} 
                   className={styles.inputField}
                   type="text"
                   placeholder="Name"

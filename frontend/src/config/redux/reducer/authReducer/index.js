@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { loginUser, registerUser } from "../../action/authAction";
 
-const  initialState = {
+const initialState = {
   user: [],
   isError: false,
   isSuccess: false,
   isLoading: false,
-  isLoggedIn: false,
+  LoggedIn: false,
   message: "",
   profileFetched: false,
   connections: [],
@@ -15,9 +15,9 @@ const  initialState = {
 
 const authSlice = createSlice({
   name: "auth",
-   initialState,
+  initialState,
   reducers: {
-    reset: () =>  initialState,
+    reset: () => initialState,
     handleLoginUser: (state) => {
       state.message = "hello";
     },
@@ -32,7 +32,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.isLoggedIn = true;
+        state.LoggedIn = true;
         state.message = "login is successful.";
       })
       .addCase(loginUser.rejected, (state, action) => {
@@ -48,16 +48,17 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.isLoggedIn = true;
-        state.message = "register is successful";
+        state.LoggedIn = true;
+        state.message = {
+          message: "Registration is successful, Please login in",
+        };
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
-         state.message = action.payload;
+        state.message = action.payload;
       });
   },
 });
 
 export default authSlice.reducer;
-

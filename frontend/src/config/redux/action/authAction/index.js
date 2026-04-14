@@ -35,6 +35,7 @@ export const registerUser = createAsyncThunk(
         password: user.password,
         name: user.name,
       });
+      return request.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
