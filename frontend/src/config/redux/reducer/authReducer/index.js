@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginUser, registerUser } from "../../action/authAction";
+import { getAboutUser, loginUser, registerUser } from "../../action/authAction";
 
 const initialState = {
   user: [],
@@ -21,6 +21,9 @@ const authSlice = createSlice({
     handleLoginUser: (state) => {
       state.message = "hello";
     },
+    emptyMessage: (state) =>{
+  state.message= "";
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -57,8 +60,16 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
-      });
-  },
+      })
+      .addCase(getAboutUser.fulfilled, (state, action) =>{
+         state.isLoading =false;
+        state.LoggedIn =false;
+        state.profileFetched = true;
+        state.user = action.payload
+      })
+      
+  }
 });
-
+ 
+export const {reset,emptyMessage} =authSlice.actions;
 export default authSlice.reducer;

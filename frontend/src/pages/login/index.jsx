@@ -3,7 +3,8 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./style.module.css";
-import { registerUser } from "@/config/redux/action/authAction";
+import { loginUser, registerUser } from "@/config/redux/action/authAction";
+import { emptyMessage } from "@/config/redux/reducer/authReducer";
 
 function LoginComponent() {
   const authState = useSelector((state) => state.auth);
@@ -21,13 +22,26 @@ function LoginComponent() {
     if (authState.LoggedIn) {
       router.push("/dashboard");
     }
-  },[authState.LoggedIn]);
+  }, [authState.LoggedIn]);
+
+  useEffect(() => {
+    if(localStorage.getItem("token")){
+      router.push("/dashboard");
+    }
+  })
+  useEffect(() => {
+    dispatch(emptyMessage());
+  }, [userLoginMethod]);
 
   const handleRegister = () => {
     console.log("registering...");
     dispatch(registerUser({ username, name, email, password }));
   };
 
+  const handleLogin = () => {
+    console.log("login....");
+    dispatch(loginUser({ email, password }));
+  };
   return (
     <UserLayout>
       <div className={styles.Container}>
@@ -37,29 +51,33 @@ function LoginComponent() {
               {userLoginMethod ? "sign in" : "sign up"}{" "}
             </p>
             <p style={{ color: authState.isError ? "red" : "green" }}>
-              {authState.message?.message || authState.message}
+              {authState.message.message}
             </p>
             <div className={styles.inputContainers}>
-              <div className={styles.inputRows}>
-                <input
-                  onChange={(e) => setName(e.target.value)} 
-                  className={styles.inputField}
-                  type="text"
-                  placeholder="Name"
-                />
-                <input
-                  onChange={(e) => setUsername(e.target.value)}
-                  className={styles.inputField}
-                  type="text"
-                  placeholder="Username"
-                />
-              </div>
+              {!userLoginMethod && (
+                <div className={styles.inputRows}>
+                  <input
+                    onChange={(e) => setName(e.target.value)}
+                    className={styles.inputField}
+                    type="text"
+                    placeholder="Name"
+                  />
+                  <input
+                    onChange={(e) => setUsername(e.target.value)}
+                    className={styles.inputField}
+                    type="text"
+                    placeholder="Username"
+                  />
+                </div>
+              )}
+
               <input
                 onChange={(e) => setEmailAddress(e.target.value)}
                 className={styles.inputField}
                 type="email"
                 placeholder="email"
               />
+
               <input
                 onChange={(e) => setPassword(e.target.value)}
                 className={styles.inputField}
@@ -70,6 +88,7 @@ function LoginComponent() {
               <div
                 onClick={() => {
                   if (userLoginMethod) {
+                    handleLogin();
                   } else {
                     handleRegister();
                   }
@@ -80,7 +99,24 @@ function LoginComponent() {
               </div>
             </div>
           </div>
-          <div className={styles.cardContainer_right}></div>
+          <div className={styles.cardContainer_right}>
+            <div>
+              {userLoginMethod ? (
+                <p>Don't have a Account?</p>
+              ) : (
+                <p>Already have a Account ?</p>
+              )}
+              <div
+                onClick={() => {
+                  setUserLoginMethod(!userLoginMethod);
+                }}
+                style={{ color: "black", textAlign: "center" }}
+                className={styles.buttonWithOutLine}
+              >
+                <p>{userLoginMethod ? "sign up" : "sign in"} </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </UserLayout>

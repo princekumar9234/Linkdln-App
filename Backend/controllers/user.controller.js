@@ -140,9 +140,10 @@ export const updateUserProfile = async (req, res) => {
   }
 };
 
+
 export const getUserAndProfile = async (req, res) => {
   try {
-    const { token } = req.body;
+    const { token } = req.query;
 
     const user = await User.findOne({ token: token });
     if (!user) {
@@ -157,6 +158,8 @@ export const getUserAndProfile = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+
+
 
 export const updateProfileData = async (req, res) => {
   try {
