@@ -1,0 +1,62 @@
+.container {
+  font-family: "Poppins";
+  padding: 1.2rem;
+}
+
+.mainContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+  padding-inline: 2rem;
+  height: 80vh;
+}
+.image {
+  height: 20rem;
+  width: 20rem;
+}
+
+.mainContainer_left {
+  flex: 0.5;
+}
+.mainContainer_right {
+  flex: 0.3;
+}
+
+.mainContainer_left > p:nth-child(1) {
+  font-size: 2.9rem;
+  background: -webkit-linear-gradient(45deg, #000000, rgb(213, 213, 213));
+  background-clip: text;
+  font-weight: bold;
+  -webkit-text-fill-color: transparent;
+  animation: animatedHomePageBreathEffect 3s linear infinite;
+}
+@keyframes animatedHomePageBreathEffect {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.mainContainer_left > p:nth-child(2) {
+  font-size: 1.7rem;
+  color: #4d4d4d;
+}
+.mainContainer_left > div.buttonjoin {
+  font-size: 1.4rem;
+  color: #4d4d4d;
+  user-select: none;
+  transition: all 0.2s;
+  margin-top: 0.8rem;
+  width: fit-content;
+  background-color: rgb(177, 134, 200);
+  padding-inline: 1.2rem;
+  padding-block: 0.6rem;
+  color: white;
+  border-radius: 20px;
+}
